@@ -88,7 +88,7 @@ namespace CircusTrainAlgorithm
             return randomSize;
         }
 
-        public static List<Animal> CreateSeveralRandomAnimals(int numberOfAnimals)
+        public static List<Animal> CreateListWithRandomAnimals(int numberOfAnimals)
         {
             List<Animal> list = new List<Animal>();
             for(int i = 0; i < numberOfAnimals; i++)

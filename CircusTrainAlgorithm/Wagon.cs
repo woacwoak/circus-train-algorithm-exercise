@@ -64,7 +64,7 @@ namespace CircusTrainAlgorithm
         public void TryAddAnimal(Animal animal)
         {
             if (!CanAdd(animal))
-                Console.WriteLine("Unsafe move. You can't add the animal due to the violation of the rules!");
+                Message.Error("Unsafe move. You can't add the animal due to the violation of the rules!");
             else
                 Animals.Add(animal);
         }

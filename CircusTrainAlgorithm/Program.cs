@@ -50,7 +50,7 @@ namespace CircusTrainAlgorithm
                 Console.WriteLine("(0) Quit");
                 Console.WriteLine("(1) Create your animal");
                 Console.WriteLine("(2) Generate a random animal");
-                Console.WriteLine("(3) Generate several random animals");
+                Console.WriteLine("(3) Generate a list with random animals and distribute to the wagons");
                 Console.ResetColor();
 
                 string userInput = Console.ReadLine();
@@ -67,8 +67,18 @@ namespace CircusTrainAlgorithm
                         break;
                     case "3":
                         Console.WriteLine("Enter a number of animals you want to generate:");
-                        int input = Convert.ToInt32(Console.ReadLine());
-                        AnimalFactory.CreateSeveralRandomAnimals(input);
+                        if (int.TryParse(Console.ReadLine(), out int count))
+                        {
+                            List<Animal> generatedAnimals = AnimalFactory.CreateListWithRandomAnimals(count);
+
+                            CircusTrain myTrain = new CircusTrain();
+                            myTrain.OptimizeDistribution(generatedAnimals);
+
+                            Console.WriteLine($"Successfully packed {count} animals into {myTrain.Wagons.Count} wagons!");
+                        }
+                        
+                        break;
+                    case "4":
                         break;
 
                     default:
