@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
@@ -7,12 +8,17 @@ namespace CircusTrainAlgorithm
 {
     public class AnimalFactory
     {
-        public static void CreateAnimal()
+        public static Animal CreateAnimal()
         {
             AnimalDiet diet = GetDietFromUser();
             AnimalSize size = GetSizeFromUser();
-            
+            Animal animal = new Animal(diet, size);
+            Message.Success("You've created a new animal successfully!");
+            Message.Success($"Your animals diet: {animal.diet}; Animal size: {animal.size}");
+            return animal;
         }
+
+        
 
         private static AnimalDiet GetDietFromUser()
         {
@@ -28,11 +34,11 @@ namespace CircusTrainAlgorithm
 
                 if (!dietIsValid)
                 {
-                    Message.ErrorMessage("Invalid input. Please enter Carnivore or Herbivore.");
+                    Message.Error("Invalid input. Please enter Carnivore or Herbivore.");
                 }
             }
             while (!dietIsValid);
-            Console.WriteLine($"Success! You selected {diet} diet.");
+            Message.Success($"Success! You selected {diet} diet.");
             return diet;
         }
 
@@ -49,11 +55,48 @@ namespace CircusTrainAlgorithm
 
                 if (!sizeIsValid)
                 {
-                    Message.ErrorMessage("Animal's size you input is invalid. Choose one of the following:  Small (1 point), Medium (3 points), Large (5 points)");
+                    Message.Error("Animal's size you input is invalid. Choose one of the following:  Small (1 point), Medium (3 points), Large (5 points)");
                 }
             } while (!sizeIsValid);
-            Console.WriteLine($"Success! You selected {size} size.");
+            Message.Success($"Success! You selected {size} size.");
             return size;
+        }
+
+        public static Animal CreateRandomAnimal()
+        {
+            AnimalDiet diet = GenerateRandomDiet();
+            AnimalSize size = GenerateRandomSize();
+            Animal animal = new Animal(diet, size);
+            Message.Success("You've generated a new animal successfully!");
+            Message.Success($"Animal diet: {animal.diet}; Animal size: {animal.size}");
+            return animal;
+        }
+        public static AnimalDiet GenerateRandomDiet()
+        {
+            Random rand = new Random();
+            Array values = Enum.GetValues(typeof(AnimalDiet));
+            int randomIndex = rand.Next(values.Length);
+            AnimalDiet randomDiet = (AnimalDiet)values.GetValue(randomIndex);
+            return randomDiet;
+        }
+        public static AnimalSize GenerateRandomSize()
+        {
+            Random rand = new Random();
+            Array values = Enum.GetValues(typeof(AnimalSize));
+            int randomIndex = rand.Next(values.Length);
+            AnimalSize randomSize = (AnimalSize)values.GetValue(randomIndex);
+            return randomSize;
+        }
+
+        public static List<Animal> CreateSeveralRandomAnimals(int numberOfAnimals)
+        {
+            List<Animal> list = new List<Animal>();
+            for(int i = 0; i < numberOfAnimals; i++)
+            {
+                Message.Success($"[{i + 1}]");
+                list.Add(CreateRandomAnimal());
+            }
+            return list;
         }
     }
 }

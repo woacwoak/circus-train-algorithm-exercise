@@ -16,12 +16,12 @@ namespace CircusTrainAlgorithm
     public class Animal
     {
         public AnimalDiet diet;
-        public int sizeInPoints;
+        public AnimalSize size;
 
-        public Animal(AnimalDiet diet, int sizeInPoints)
+        public Animal(AnimalDiet diet, AnimalSize size)
         {
             this.diet = diet;
-            this.sizeInPoints = sizeInPoints;
+            this.size = size;
         }
     }
 }

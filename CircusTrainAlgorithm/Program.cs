@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Security.Cryptography.X509Certificates;
 
 namespace CircusTrainAlgorithm
@@ -36,7 +37,7 @@ namespace CircusTrainAlgorithm
             Console.WriteLine("We need to know two things:");
             Console.WriteLine("1. DIET: Are they a Carnivore or a Herbivore?");
             Console.WriteLine("2. SIZE: Small (1pt), Medium (3pts), or Large (5pts)?");
-            Console.WriteLine("-----------------------------------------------");
+            Console.WriteLine("-----------------------------------------------\n");
             Console.ResetColor();
 
             
@@ -44,11 +45,12 @@ namespace CircusTrainAlgorithm
             bool running = true;
             while (running)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("Choose one of the following:");
                 Console.WriteLine("(0) Quit");
-                Console.WriteLine("(1) Create an animal");
-                Console.WriteLine("(2) ");
+                Console.WriteLine("(1) Create your animal");
+                Console.WriteLine("(2) Generate a random animal");
+                Console.WriteLine("(3) Generate several random animals");
                 Console.ResetColor();
 
                 string userInput = Console.ReadLine();
@@ -60,8 +62,17 @@ namespace CircusTrainAlgorithm
                     case "1":
                         AnimalFactory.CreateAnimal();
                         break;
+                    case "2":
+                        AnimalFactory.CreateRandomAnimal();
+                        break;
+                    case "3":
+                        Console.WriteLine("Enter a number of animals you want to generate:");
+                        int input = Convert.ToInt32(Console.ReadLine());
+                        AnimalFactory.CreateSeveralRandomAnimals(input);
+                        break;
+
                     default:
-                        Message.ErrorMessage("Error! The value you entered is invalid. Enter a proper number.");
+                        Message.Error("Error! The value you entered is invalid. Enter a proper number.");
                         break;
                 }
             }

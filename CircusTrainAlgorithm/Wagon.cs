@@ -22,34 +22,51 @@ namespace CircusTrainAlgorithm
             int total = 0;
             foreach (Animal Animal in Animals)
             {
-                total += Animal.sizeInPoints;
+                total += (int)Animal.size;
             }
             return total;
         }
 
         public bool CanAdd(Animal animal)
         {
-            if(CurrentPoints() + animal.sizeInPoints <= MaxCapacity)
+            if(CurrentPoints() + (int)animal.size <= MaxCapacity)
                 return false;
 
             if(isSpecial)
             {
-                if (Animals.Count >= 2) return false;
-                if (animal.sizeInPoints == 5) return false;
-
+                if (Animals.Count > 2) return false;
+                if (animal.size == AnimalSize.Large) return false;
                 return true;
+            }
+            if(animal.diet == AnimalDiet.Carnivore)
+            {
+                foreach(Animal existing in Animals)
+                {
+                    if((int)existing.size <= (int)animal.size)
+                    {
+                        return false;
+                    }
+                }
+            }
+            foreach(Animal existing in Animals)
+            {
+                if(existing.diet == AnimalDiet.Carnivore)
+                {
+                    if((int)existing.size >= (int)animal.size)
+                    {
+                        return false;
+                    }
+                }
             }
             //Add additional checks
             return true;
         }
-        public bool TryAddAnimal(Animal animal)
+        public void TryAddAnimal(Animal animal)
         {
-            if (CanAdd(animal))
-            {
+            if (!CanAdd(animal))
+                Console.WriteLine("Unsafe move. You can't add the animal due to the violation of the rules!");
+            else
                 Animals.Add(animal);
-                return true;
-            }
-            return false;
         }
     }
 }
