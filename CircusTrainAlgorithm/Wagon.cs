@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace CircusTrainAlgorithm
@@ -14,6 +15,7 @@ namespace CircusTrainAlgorithm
         public Wagon(bool isSpecial)
         {
             this.isSpecial = isSpecial;
+            this.Animals = new List<Animal>();
         }
         public int CurrentPoints()
         {
@@ -27,7 +29,9 @@ namespace CircusTrainAlgorithm
 
         public bool CanAdd(Animal animal)
         {
-            if(CurrentPoints() + animal.sizeInPoints <= MaxCapacity) return false;
+            if(CurrentPoints() + animal.sizeInPoints <= MaxCapacity)
+                return false;
+
             if(isSpecial)
             {
                 if (Animals.Count >= 2) return false;
@@ -37,6 +41,15 @@ namespace CircusTrainAlgorithm
             }
             //Add additional checks
             return true;
+        }
+        public bool TryAddAnimal(Animal animal)
+        {
+            if (CanAdd(animal))
+            {
+                Animals.Add(animal);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CircusTrainAlgorithm
 {
     class Program
     {
+        
+
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -36,50 +39,32 @@ namespace CircusTrainAlgorithm
             Console.WriteLine("-----------------------------------------------");
             Console.ResetColor();
 
+            
 
-
-            AnimalDiet diet;
-            bool dietIsValid = false;
-            do
+            bool running = true;
+            while (running)
             {
-                Console.WriteLine("Please enter your animal diet. Carnivore (meat-eating) or Herbivore (plant-eating)");
-                string input = Console.ReadLine().Trim().ToLower();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Choose one of the following:");
+                Console.WriteLine("(0) Quit");
+                Console.WriteLine("(1) Create an animal");
+                Console.WriteLine("(2) ");
+                Console.ResetColor();
 
-                dietIsValid = Enum.TryParse(input, true, out diet);
-
-
-                if(!dietIsValid)
+                string userInput = Console.ReadLine();
+                switch (userInput)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input. Please enter Carnivore or Herbivore.");
-                    Console.ResetColor();
+                    case "0":
+                        running = false;
+                        break;
+                    case "1":
+                        AnimalFactory.CreateAnimal();
+                        break;
+                    default:
+                        Message.ErrorMessage("Error! The value you entered is invalid. Enter a proper number.");
+                        break;
                 }
             }
-            while (!dietIsValid);
-            Console.WriteLine($"Success! You selected {diet} diet.");
-
-
-            AnimalSize size;
-            bool sizeIsValid = false;
-            int sizeInPoints = 0;
-            do
-            {
-                Console.WriteLine("Please enter your animal size. Small (1 point), Medium (3 points), Large (5 points)");
-                string input = Console.ReadLine().Trim().ToLower();
-                sizeIsValid = Enum.TryParse(input, true, out size);
-
-                if (!sizeIsValid)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Animal's size you input is invalid. Choose one of the following:  Small (1 point), Medium (3 points), Large (5 points)");
-                    Console.ResetColor();
-                }
-            } while (!sizeIsValid);
-            Console.WriteLine($"Success! You selected {size} size.");
-
-            Animal animal = new Animal(diet, sizeInPoints);
-
-            Console.WriteLine($"Your animal's diet is {animal.diet} and it's size costs {animal.sizeInPoints} points.");
         }
     }
 }
