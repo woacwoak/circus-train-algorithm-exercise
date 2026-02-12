@@ -38,62 +38,46 @@ namespace CircusTrainAlgorithm
 
 
 
-            string animalDiet;
+            AnimalDiet diet;
             bool dietIsValid = false;
-
             do
             {
                 Console.WriteLine("Please enter your animal diet. Carnivore (meat-eating) or Herbivore (plant-eating)");
-                animalDiet = Console.ReadLine().Trim().ToLower();
-                switch (animalDiet)
+                string input = Console.ReadLine().Trim().ToLower();
+
+                dietIsValid = Enum.TryParse(input, true, out diet);
+
+
+                if(!dietIsValid)
                 {
-                    case "carnivore":
-                        dietIsValid = true;
-                        break;
-                    case "herbivore":
-                        dietIsValid = true;
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Diet should be either Carnivore or Herbivore");
-                        Console.ResetColor();
-                        break;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input. Please enter Carnivore or Herbivore.");
+                    Console.ResetColor();
                 }
             }
             while (!dietIsValid);
-            Console.WriteLine($"Success! You selected {animalDiet} diet.");
+            Console.WriteLine($"Success! You selected {diet} diet.");
 
-            string animalSize;
+
+            AnimalSize size;
             bool sizeIsValid = false;
             int sizeInPoints = 0;
             do
             {
                 Console.WriteLine("Please enter your animal size. Small (1 point), Medium (3 points), Large (5 points)");
-                animalSize = Console.ReadLine().Trim().ToLower();
-                switch (animalSize)
+                string input = Console.ReadLine().Trim().ToLower();
+                sizeIsValid = Enum.TryParse(input, true, out size);
+
+                if (!sizeIsValid)
                 {
-                    case "small":
-                        sizeIsValid = true;
-                        sizeInPoints = 1;
-                        break;
-                    case "medium":
-                        sizeIsValid = true;
-                        sizeInPoints = 3;
-                        break;
-                    case "large":
-                        sizeIsValid = true;
-                        sizeInPoints = 5;
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Animal's size you input is invalid. Choose one of the following:  Small (1 point), Medium (3 points), Large (5 points)");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        break;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Animal's size you input is invalid. Choose one of the following:  Small (1 point), Medium (3 points), Large (5 points)");
+                    Console.ResetColor();
                 }
             } while (!sizeIsValid);
-            Console.WriteLine($"Another success! You selected {animalSize} size.");
+            Console.WriteLine($"Success! You selected {size} size.");
 
-            Animal animal = new Animal(animalDiet, sizeInPoints);
+            Animal animal = new Animal(diet, sizeInPoints);
 
             Console.WriteLine($"Your animal's diet is {animal.diet} and it's size costs {animal.sizeInPoints} points.");
         }
