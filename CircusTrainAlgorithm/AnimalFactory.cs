@@ -14,7 +14,7 @@ namespace CircusTrainAlgorithm
             AnimalSize size = GetSizeFromUser();
             Animal animal = new Animal(diet, size);
             Message.Success("You've created a new animal successfully!");
-            Message.Success($"Your animals diet: {animal.diet}; Animal size: {animal.size}");
+            Message.Success($"Your animals diet: {animal.Diet}; Animal size: {animal.Size}");
             return animal;
         }
 
@@ -68,7 +68,7 @@ namespace CircusTrainAlgorithm
             AnimalSize size = GenerateRandomSize();
             Animal animal = new Animal(diet, size);
             Message.Success("You've generated a new animal successfully!");
-            Message.Success($"Animal diet: {animal.diet}; Animal size: {animal.size}");
+            Message.Success($"Animal diet: {animal.Diet}; Animal size: {animal.Size}");
             return animal;
         }
         public static AnimalDiet GenerateRandomDiet()

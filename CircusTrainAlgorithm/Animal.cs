@@ -15,8 +15,13 @@ namespace CircusTrainAlgorithm
 {
     public class Animal
     {
-        public AnimalDiet diet;
-        public AnimalSize size;
+        private AnimalDiet diet;
+        public AnimalDiet Diet { get { return diet; } }
+
+        private AnimalSize size;
+        public AnimalSize Size { get { return size; } }
+
+        public int SizePoints { get { return (int)size; } }
 
         public Animal(AnimalDiet diet, AnimalSize size)
         {

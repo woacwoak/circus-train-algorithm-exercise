@@ -73,7 +73,7 @@ namespace CircusTrainAlgorithm
 
                             CircusTrain myTrain = new CircusTrain();
                             myTrain.OptimizeDistribution(generatedAnimals);
-
+                            myTrain.ListAllWagons();
                             Console.WriteLine($"Successfully packed {count} animals into {myTrain.Wagons.Count} wagons!");
                         }
                         

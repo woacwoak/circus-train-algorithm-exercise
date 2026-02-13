@@ -7,10 +7,11 @@ namespace CircusTrainAlgorithm
 {
     public class Wagon
     {
-        public const int MaxCapacity = 10;
-        public bool isSpecial;
+        private const int MaxCapacity = 10;
+        private bool isSpecial;
+        public bool IsSpecial { get { return isSpecial; } }
 
-        public List<Animal> Animals { get; set; }
+        public List<Animal> Animals { get; private set; }
 
         public Wagon(bool isSpecial)
         {
@@ -22,27 +23,27 @@ namespace CircusTrainAlgorithm
             int total = 0;
             foreach (Animal Animal in Animals)
             {
-                total += (int)Animal.size;
+                total += Animal.SizePoints;
             }
             return total;
         }
 
         public bool CanAdd(Animal animal)
         {
-            if(CurrentPoints() + (int)animal.size <= MaxCapacity)
+            if(CurrentPoints() + animal.SizePoints > MaxCapacity)
                 return false;
 
             if(isSpecial)
             {
                 if (Animals.Count > 2) return false;
-                if (animal.size == AnimalSize.Large) return false;
+                if (animal.Size == AnimalSize.Large) return false;
                 return true;
             }
-            if(animal.diet == AnimalDiet.Carnivore)
+            if(animal.Diet == AnimalDiet.Carnivore)
             {
                 foreach(Animal existing in Animals)
                 {
-                    if((int)existing.size <= (int)animal.size)
+                    if(existing.SizePoints <= animal.SizePoints)
                     {
                         return false;
                     }
@@ -50,9 +51,9 @@ namespace CircusTrainAlgorithm
             }
             foreach(Animal existing in Animals)
             {
-                if(existing.diet == AnimalDiet.Carnivore)
+                if(existing.Diet == AnimalDiet.Carnivore)
                 {
-                    if((int)existing.size >= (int)animal.size)
+                    if(existing.SizePoints >= animal.SizePoints)
                     {
                         return false;
                     }

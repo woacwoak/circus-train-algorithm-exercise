@@ -11,6 +11,24 @@ namespace CircusTrainAlgorithm
         public List<Wagon> Wagons { get; private set; } = new List<Wagon>();
         private const int MaxSpecialWagons = 4;
 
+        public void ListAllWagons()
+        {
+            for(int i = 0; i < Wagons.Count; i++)
+            {
+                string isWagonSpecial = Wagons[i].IsSpecial ? "Special" : "Normal";
+                Message.Success($"--- Wagon #{i+1} ({isWagonSpecial}) ---");
+                Message.Success("Animals:");
+                if (Wagons[i].Animals.Count == 0)
+                    Message.Error("Empty");
+
+
+                for(int j = 0; j < Wagons[i].Animals.Count; j++)
+                {
+                    Message.Success($"{j+1}) {Wagons[i].Animals[j].Diet} {Wagons[i].Animals[j].Size}");
+                }
+            }
+        }
+
         public void OptimizeDistribution(List<Animal> animals)
         {
             Wagons.Clear();
@@ -21,11 +39,11 @@ namespace CircusTrainAlgorithm
 
             foreach (Animal a in animals)
             {
-                if(a.diet == AnimalDiet.Carnivore && a.size == AnimalSize.Large)
+                if(a.Diet == AnimalDiet.Carnivore && a.Size == AnimalSize.Large)
                 {
                     largeCarnivores.Add(a);
                 }
-                else if(a.diet == AnimalDiet.Carnivore && a.size != AnimalSize.Large)
+                else if(a.Diet == AnimalDiet.Carnivore && a.Size != AnimalSize.Large)
                 {
                     mediumAndSmallCarnivores.Add(a);
                 }
@@ -60,7 +78,7 @@ namespace CircusTrainAlgorithm
                 Animal companion = null;
                 foreach(Animal o in others)
                 {
-                    if(o.size != AnimalSize.Large)
+                    if(o.Size != AnimalSize.Large)
                     {
                         companion = o;
                         break;
@@ -76,14 +94,14 @@ namespace CircusTrainAlgorithm
             List<Animal> remaining = new List<Animal>();
             remaining.AddRange(mediumAndSmallCarnivores);
             remaining.AddRange(others);
-            remaining.Sort((x, y) => y.size.CompareTo(x.size));
+            remaining.Sort((x, y) => y.Size.CompareTo(x.Size));
 
             foreach (var animal in remaining)
             {
                 bool placed = false;
                 foreach(Wagon wagon in Wagons)
                 {
-                    if (wagon.isSpecial)
+                    if (wagon.IsSpecial)
                         continue;
                     if (wagon.CanAdd(animal))
                     {
