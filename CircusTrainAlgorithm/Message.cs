@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CircusTrainAlgorithm
+﻿namespace CircusTrainAlgorithm
 {
     public class Message
     {

@@ -1,13 +1,10 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Security.Cryptography.X509Certificates;
+﻿using CircusTrainAlgorithm.Business;
+using CircusTrainAlgorithm.Domain;
 
 namespace CircusTrainAlgorithm
 {
     class Program
     {
-        
-
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -72,8 +69,9 @@ namespace CircusTrainAlgorithm
                             List<Animal> generatedAnimals = AnimalFactory.CreateListWithRandomAnimals(count);
 
                             CircusTrain myTrain = new CircusTrain();
-                            myTrain.OptimizeDistribution(generatedAnimals);
-                            myTrain.ListAllWagons();
+                            CircusTrainService myTrainService = new CircusTrainService(myTrain);
+                            myTrainService.OptimizeDistribution(generatedAnimals);
+                            myTrainService.ListAllWagons();
                             Console.WriteLine($"Successfully packed {count} animals into {myTrain.Wagons.Count} wagons!");
                         }
                         else

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CircusTrainAlgorithm.Domain;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
-namespace CircusTrainAlgorithm
+namespace CircusTrainAlgorithm.Business
 {
     public class AnimalFactory
     {
